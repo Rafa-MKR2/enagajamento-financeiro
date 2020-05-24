@@ -43,7 +43,7 @@ class ServicePI {
 
      
     requestInfoIp(){
-       return fetch('http://ip-api.com/json/')
+       return fetch('https://ip-api.com/json/')
        
     }
 
