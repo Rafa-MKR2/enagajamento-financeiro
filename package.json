@@ -1,0 +1,22 @@
+{
+    "name": "engajamento-financeiro",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server"
+    },
+    "author": "Rafael D.carmo",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "ejs": "^3.0.1",
+        "express": "^4.17.1",
+        "express-validator": "^6.4.0",
+        "firebase": "^7.14.2",
+        "firebase-admin": "^8.11.0",
+        "needle": "^0.11.0"
+    },
+    "description": ""
+}
