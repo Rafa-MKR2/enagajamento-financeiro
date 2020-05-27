@@ -3,15 +3,19 @@ var _expressvalidator = require('express-validator');
 
 var _firebaseadmin = require('firebase-admin'); var _firebaseadmin2 = _interopRequireDefault(_firebaseadmin);
 
+var _needle = require('needle'); var _needle2 = _interopRequireDefault(_needle);
+
 var _firebase = require('firebase'); var firebase = _interopRequireWildcard(_firebase);
+
 
 class UserController{
 
-     __init() {this.uid = 'fuXpC3xyTAS3c02rb5HP8lOtQIn2'}
 
-    constructor(){;UserController.prototype.__init.call(this);
+    constructor(){
      var service  = require("./../config/serviceAccount.json")
-     var firebaseConfig = {
+    
+    // Initialize Firebase
+    firebase.initializeApp({
       apiKey: "AIzaSyCFSUbqtE00IxKfnebdQoAknxMUXghlRPw",
       authDomain: "serve-uinterative.firebaseapp.com",
       databaseURL: "https://serve-uinterative.firebaseio.com",
@@ -20,15 +24,16 @@ class UserController{
       messagingSenderId: "890184791689",
       appId: "1:890184791689:web:c467f594030ecf81b3b858",
       measurementId: "G-HP784CV8BT"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+     
+    });
 
       _firebaseadmin2.default.initializeApp({
         credential : _firebaseadmin2.default.credential.cert(service)
       });
     
     }
+
+
 
 
      async Index (req, res ){
@@ -38,39 +43,102 @@ class UserController{
     } 
 
 
+
+
+
+
      async Login (req, res ) {
        
        const errors = _expressvalidator.validationResult.call(void 0, req);
         
        if (!errors.isEmpty())
         {
-         
             return res.status(422).json(errors.array()).end();
         } 
         else
         {
 
-          var user = req.body;
+         var user = req.body;
 
           firebase.auth().signInWithEmailAndPassword(user.email, user.password)
 
           .then((date ) =>
              res.status(200).json(date.user).end())
          
-           .catch(date=>
+          .catch(date=>
              res.status(401).json(date).end())
         }
-
-
     }
 
 
 
-      GerarToken(uid )   {
-
-     return _firebaseadmin2.default.auth().createCustomToken(uid).then(token =>token)
-      .catch(err => err )
+     async IpGeoLocalize (req  , res ){
+ 
+      _needle2.default.get('http://ip-api.com/json/', (error, response) => {
+          if (!error && response.statusCode == 200)
+           res.status(200).json(response.body).end();
+         
+        });
     }
+
+
+     async GerarToken (req, res ) {
+
+      const errors = _expressvalidator.validationResult.call(void 0, req);
+        
+        if (!errors.isEmpty())
+        {
+          return res.status(422).json(errors.array()).end();
+        } 
+        else
+        {
+        
+          var user = req.body;
+
+          return _firebaseadmin2.default.auth().createCustomToken(user.uid)
+            .then(token =>{
+              console.log(token)
+              user.token = token;
+              return res.status(200).json(user).end()
+
+            })
+            .catch(err => {
+              return res.status(401).json(errors.array()).end();
+
+            })
+        }
+     }
+
+
+
+      async UsuarioPerfil (req, res  ) {
+
+      const errors = _expressvalidator.validationResult.call(void 0, req);
+
+       
+      if (!errors.isEmpty())
+      {
+        return res.status(422).json(errors.array()).end();
+      } 
+      else
+      {
+        req.body.idade
+        var user = req.body;
+
+        firebase.database().app.firestore().collection(`/usuários`).doc(user.uid)
+        .collection('perfil')
+        .doc(`Meuperfil`)
+        .set(user)
+        .then(index => {
+          console.log(index)
+          res.status(200).json(index).end();
+        })
+        .catch(error => res.status(401).json(error).end())
+      }
+  
+
+     }
+  
     
 }
 

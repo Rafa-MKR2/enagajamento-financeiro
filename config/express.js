@@ -4,7 +4,6 @@ var _routes = require('../routes'); var _routes2 = _interopRequireDefault(_route
 
 var _bodyparser = require('body-parser'); var _bodyparser2 = _interopRequireDefault(_bodyparser);
 
-
 class App{
 
     
@@ -24,11 +23,18 @@ class App{
         // graficos e views
         this.express.set('view engine', 'ejs');
         this.express.use(_express2.default.static('views'));
-       
+
         // json config
         this.express.use(_bodyparser2.default.json())
         this.express.use(_express2.default.json({ type: 'application/*+json' }))
 
+
+      //  var allowedOrigins = ['http://localhost:3000', 'http://yourapp.com'];
+
+        this.express.use(_cors2.default.call(void 0, {
+            origin: 'https://engajamentofinanceiro.herokuapp.com',
+            
+          }));
     }
 
      routes () {

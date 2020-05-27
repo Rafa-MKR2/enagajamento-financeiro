@@ -9,7 +9,10 @@ routes.get(`/`, _UserController2.default.Index);
 
 
 routes.post(`/auth`, _validator2.default.LoginRules(), _UserController2.default.Login)
-        
+routes.post(`/token`, _validator2.default.TokenGenerate(), _UserController2.default.GerarToken)
+routes.post(`/perfil`, _validator2.default.Perfil(), _UserController2.default.UsuarioPerfil)
+routes.get(`/localize`,  _UserController2.default.IpGeoLocalize)
+
 
 
 exports. default = routes;

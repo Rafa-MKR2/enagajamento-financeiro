@@ -2,14 +2,40 @@
 class ServicePI {
 
     constructor(){
+        var get = document.querySelector.bind(document)
+
         // variaveis locais
         this._localIp = {};
 
+        this._assinantes = 0;
+
+        //elementos html
+        this._divModalView  =  get('.modal');
+        this._pessoasNumView = get('.pessoas');
+        this._localizacaoView = get('.localizacao');
 
         //metodos 
         this.check();
+        setInterval(this.intervaloModal.bind(this), 1000 *30);
 
     }
+
+
+
+    intervaloModal(){
+    
+
+      
+        this._divModalView.classList.add('active');
+        this._pessoasNumView.innerHTML = 300 +  this._assinantes;
+
+   
+          
+        setTimeout(() => this._divModalView.classList.remove('active'),1000 * 15);
+    
+        this._assinantes++
+    }
+    
 
 
      check(){
@@ -19,7 +45,7 @@ class ServicePI {
         {
             this._localIp = JSON.parse(info);
             console.log("capturando storange gravado anteriormente...");
-            console.log(this._localIp)
+            this._localizacaoView.innerHTML = this._localIp.city;
 
         }
         else {
@@ -29,8 +55,9 @@ class ServicePI {
                
                 this._localIp = dados;
                 localStorage.setItem("localIP", JSON.stringify(dados));
-                console.log("garvando storange ...");
-          
+                console.log("gravando novo storange ...");
+                this._localizacaoView.innerHTML = this._localIp.city;
+
                })
                
             })
@@ -43,42 +70,15 @@ class ServicePI {
 
      
     requestInfoIp(){
-       return fetch('http://ip-api.com/json/')
+       return fetch('/localize')
        
     }
 
 
 
-    get getInfoLocal(){
-        
-        let info = this._localIp;
-        return info
-    }
-
-}
-
-// modal
-
-const divModal = document.querySelector('.modal');
-const pessoasNum = document.querySelector('.pessoas');
-
-let i = 0;
-
-function intervaloModal(){
-
-    pessoasNum.innerHTML = 300 + i;
-
-    divModal.classList.add('active');
-      
-    function desativarModal(){
-      divModal.classList.remove('active');
-    }
-      
-    setTimeout(desativarModal,1000 * 15);
-
-    i++
 
 }
 
 
-setInterval(intervaloModal,1000 * 30)
+
+
