@@ -3,7 +3,7 @@ var _expressvalidator = require('express-validator');
 
 var _firebaseadmin = require('firebase-admin'); var _firebaseadmin2 = _interopRequireDefault(_firebaseadmin);
 
-var _needle = require('needle'); var _needle2 = _interopRequireDefault(_needle);
+
 
 var _firebase = require('firebase'); var firebase = _interopRequireWildcard(_firebase);
 
@@ -72,18 +72,9 @@ class UserController{
 
 
 
-     async IpGeoLocalize (req  , res ){
- 
-      _needle2.default.get('http://ip-api.com/json/', (error, response) => {
-          if (!error && response.statusCode == 200)
-           res.status(200).json(response.body).end();
-         
-        });
-    }
-
-
      async GerarToken (req, res ) {
 
+    
       const errors = _expressvalidator.validationResult.call(void 0, req);
         
         if (!errors.isEmpty())

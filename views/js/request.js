@@ -70,8 +70,13 @@ class ServicePI {
 
      
     requestInfoIp(){
-       return fetch('/localize')
+       return fetch('https://www.l2.io/ip.json')
        
+    }
+
+
+    requestLocation(ip){
+       return  fetch('https://www.l2.io/ip.json'+ ip)
     }
 
 
