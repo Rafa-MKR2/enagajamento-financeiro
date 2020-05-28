@@ -18,7 +18,6 @@ class App{
      middlewares () {
 
     
-       // this.express.use(cors());
         
         // graficos e views
         this.express.set('view engine', 'ejs');
@@ -32,10 +31,7 @@ class App{
 
       //  var allowedOrigins = ['http://localhost:3000', 'http://yourapp.com'];
 
-      //  this.express.use(cors({
-      //      origin: 'https://engajamentofinanceiro.herokuapp.com',
-            
-      //    }));
+     
     }
 
      routes () {
