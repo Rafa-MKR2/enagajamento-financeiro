@@ -70,19 +70,15 @@ class ServicePI {
 
      
     requestInfoIp(){
-       return fetch('https://www.l2.io/ip.json')
+       return fetch('https://ipapi.co/json/')
        
-    }
-
-
-    requestLocation(ip){
-       return  fetch('https://www.l2.io/ip.json'+ ip)
     }
 
 
 
 
 }
+
 
 
 
